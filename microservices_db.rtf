@@ -1,0 +1,45 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 create database microservices_db;\
+use microservices_db;\
+create table accounts (\
+	account_number int primary key auto_increment,\
+	customer_id int not null,\
+    account_type varchar(100) not null,\
+    branch_address varchar(200) not null\
+);\
+\
+create table customer (\
+	customer_id int primary key auto_increment,\
+    customer_name varchar(250) not null,\
+    email varchar(150) not null unique,\
+    mobile_number varchar(20) not null unique\
+);\
+\
+CREATE TABLE cards (\
+  card_id int NOT NULL AUTO_INCREMENT,\
+  mobile_number varchar(15) NOT NULL,\
+  card_number varchar(100) NOT NULL,\
+  card_type varchar(100) NOT NULL,\
+  total_limit int NOT NULL,\
+  amount_used int NOT NULL,\
+  available_amount int NOT NULL,\
+  PRIMARY KEY (`card_id`)\
+);\
+\
+CREATE TABLE `loans` (\
+  `loan_id` int NOT NULL AUTO_INCREMENT,\
+  `mobile_number` varchar(15) NOT NULL,\
+  `loan_number` varchar(100) NOT NULL,\
+  `loan_type` varchar(100) NOT NULL,\
+  `total_loan` int NOT NULL,\
+  `amount_paid` int NOT NULL,\
+  `outstanding_amount` int NOT NULL,\
+  PRIMARY KEY (`loan_id`)\
+);\
+}
