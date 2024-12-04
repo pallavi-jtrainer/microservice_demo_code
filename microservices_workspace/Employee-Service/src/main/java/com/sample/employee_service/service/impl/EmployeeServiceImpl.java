@@ -13,6 +13,7 @@ import com.sample.employee_service.dto.ResponseDto;
 import com.sample.employee_service.entity.Employee;
 import com.sample.employee_service.mapper.EmployeeMapper;
 import com.sample.employee_service.repository.EmployeeRepository;
+import com.sample.employee_service.service.APIClient;
 import com.sample.employee_service.service.EmployeeService;
 
 @Service
@@ -22,7 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository repo;
 	
 	@Autowired
-	private RestTemplate restTemplate;
+	private APIClient apiClient;
+	
+//	@Autowired
+//	private RestTemplate restTemplate;
 	
 	@Override
 	public EmployeeDto saveEmployee(EmployeeDto e) {
@@ -42,11 +46,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee e = repo.findById(id).get();
 		EmployeeDto eDto = EmployeeMapper.mapToEmployeeDto(e);
 		
-		ResponseEntity<DepartmentDto> responseEntity = restTemplate
-				.getForEntity("http://localhost:8084/api/departments/" + e.getDepartmentCode(),
-				DepartmentDto.class);
+//		ResponseEntity<DepartmentDto> responseEntity = restTemplate
+//				.getForEntity("http://localhost:8084/api/departments/" + e.getDepartmentCode(),
+//				DepartmentDto.class);
+//		
+//		DepartmentDto deptDto = responseEntity.getBody();
 		
-		DepartmentDto deptDto = responseEntity.getBody();
+		DepartmentDto deptDto = apiClient.getDepartment(e.getDepartmentCode());
 		
 		response.setEmployee(eDto);
 		response.setDepartment(deptDto);
