@@ -1,4 +1,4 @@
-package com.sample.department_service.entity;
+package com.sample.employee_service.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,20 +12,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="department")
+@Table(name="employees")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Department {
-
+public class Employee {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="department_name", nullable=false, unique=true)
-	private String departmentName;
+	@Column(name="first_name", nullable=false)
+	private String firstName;
 	
-	@Column(name="department_code", nullable=false, unique=true)
+	@Column(name="last_name",nullable=false)
+	private String lastName;
+	
+	@Column(name="email",nullable=false, unique=true)
+	private String email;
+	
+	@Column(name="department_code", nullable=false)
 	private String departmentCode;
 }
