@@ -32,6 +32,6 @@ public class Employee {
 	@Column(name="email",nullable=false, unique=true)
 	private String email;
 	
-	@Column(name="department_code", nullable=false)
+	@Column(name="department_code")
 	private String departmentCode;
 }

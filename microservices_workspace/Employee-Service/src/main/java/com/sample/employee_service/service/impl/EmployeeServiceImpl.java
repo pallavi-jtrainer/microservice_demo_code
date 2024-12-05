@@ -16,6 +16,8 @@ import com.sample.employee_service.repository.EmployeeRepository;
 import com.sample.employee_service.service.APIClient;
 import com.sample.employee_service.service.EmployeeService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -38,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	
-
+	@CircuitBreaker(name="${spring.application.name}", fallbackMethod = "getDefaultDepartment")
 	@Override
 	public ResponseDto getEmployeeById(Long id) {
 		ResponseDto response = new ResponseDto();
@@ -63,5 +65,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 //	public Employee saveEmployee(Employee e) {
 //		return repo.save(e);
 //	}
+	
+	//fallback method
+	public ResponseDto getDefaultDepartment(Long id, Exception ex) {
+		Employee e = repo.findById(id).get();
+		
+		DepartmentDto deptDto = new DepartmentDto();
+		deptDto.setDepartmentName("Learning and Development");
+		deptDto.setDepartmentCode("LnD");
+		
+		EmployeeDto eDto = EmployeeMapper.mapToEmployeeDto(e);
+		
+		ResponseDto res = new ResponseDto();
+		res.setEmployee(eDto);
+		res.setDepartment(deptDto);
+		
+		return res;
+	}
 
 }
